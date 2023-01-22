@@ -16,46 +16,69 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
+            if mainViewModel.players.isEmpty {
+                VStack {
+                    Text("No players here...")
+                        .font(.title)
+                        .foregroundColor(.secondary)
+                    Text("Let's add new players by clicking the button below")
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(EdgeInsets(top: 4, leading: 10, bottom: 20, trailing: 10))
+                    Button(action:{
+                        self.isAddPressed = true
+                    }) {
+                        Text("\(plusSymbol) Add new player")
+                            .foregroundColor(.accentColor)
+                            .frame(alignment: .center)
+                    }
+                }
+                .navigationTitle("Players List")
+                .navigationDestination(isPresented: $isAddPressed) {
+                    Text("Add player")
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: Text("Settings")) {
+                            Text("Settings")
+                        }
+                    }
+                }
+            } else {
                 List {
                     ForEach(mainViewModel.players) { item in
                         PlayerRowView(player: item)
                     }
-                }
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            isAddPressed = true
-                        }) {
-                            Text("\(plusSymbol) Add new player")
-                                .font(.title3)
-                                .frame(width: .infinity, height: 60, alignment: .center)
-                                .foregroundColor(.white)
-                                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                        }
-                        .background(Color.accentColor)
-                        .clipShape(Capsule())
-                        .padding(.horizontal)
-                        .navigationDestination(isPresented: $isAddPressed) {
-                            Text("Add new player")
-                        }
+                    .onDelete(perform: mainViewModel.deleteItem)
+//
+                    Button(action: {
+                        isAddPressed = true
+                    }) {
+                        Text("\(plusSymbol) Add new player")
+                            .foregroundColor(.accentColor)
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-            }
-            .navigationTitle("Players List")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
+                .navigationTitle("Players List")
+                .navigationDestination(isPresented: $isAddPressed) {
+                    Text("Add player")
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: Text("Settings")) {
-                        Text("Settings")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: Text("Settings")) {
+                            Text("Settings")
+                        }
                     }
                 }
             }
         }
+    }
+    
+    func goToAddPlayerView() {
+        
     }
 }
 
@@ -67,3 +90,27 @@ struct MainView_Previews: PreviewProvider {
         .environmentObject(MainViewModel())
     }
 }
+
+/*
+ VStack {
+     Spacer()
+     HStack {
+         Spacer()
+         Button(action: {
+             isAddPressed = true
+         }) {
+             Text("\(plusSymbol) Add new player")
+                 .font(.title3)
+                 .frame(width: .infinity, height: 60, alignment: .center)
+                 .foregroundColor(.white)
+                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+         }
+         .background(Color.accentColor)
+         .clipShape(Capsule())
+         .padding(.horizontal)
+         .navigationDestination(isPresented: $isAddPressed) {
+             Text("Add new player")
+         }
+     }
+ }
+ */
