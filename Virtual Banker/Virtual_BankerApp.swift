@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct Virtual_BankerApp: App {
+    
+    @StateObject var mainViewModel = MainViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                MainView()
+            }
+            .environmentObject(mainViewModel)
         }
     }
 }
