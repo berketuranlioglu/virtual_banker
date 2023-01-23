@@ -11,6 +11,8 @@ struct MainView: View {
     
     @EnvironmentObject var mainViewModel: MainViewModel
     @State var isAddPressed = false
+    @State var betweenViews: Bool = false
+    @State var restartConfirmation: Bool = false
     
     let plusSymbol = Image(systemName: "plus")
     
@@ -19,19 +21,25 @@ struct MainView: View {
             if mainViewModel.players.isEmpty {
                 NoPlayersView()
             } else {
-                List {
-                    ForEach(mainViewModel.players) { item in
-                        PlayerRowView(player: item)
+                Form {
+                    List {
+                        ForEach(mainViewModel.players.sorted {
+                            $0.money > $1.money
+                        }) { item in
+                            PlayerRowView(player: item)
+                        }
+                        .onDelete(perform: mainViewModel.deletePlayer)
                     }
-                    .onDelete(perform: mainViewModel.deletePlayer)
                     
-                    Button(action: {
-                        isAddPressed = true
-                    }) {
-                        Text("\(plusSymbol) Add new player")
-                            .foregroundColor(.accentColor)
+                    Section {
+                        Button(action: {
+                            isAddPressed = true
+                        }) {
+                            Text("\(plusSymbol) Add new player")
+                                .foregroundColor(.accentColor)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .navigationTitle("Players List")
                 .navigationDestination(isPresented: $isAddPressed) {
@@ -42,8 +50,17 @@ struct MainView: View {
                         EditButton()
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: Text("Settings")) {
-                            Text("Settings")
+                        Button(action: { restartConfirmation = true }) {
+                            Text("Restart")
+                        }
+                        .confirmationDialog("Change background",
+                                            isPresented: $restartConfirmation) {
+                            Button("Yes", role: .destructive) {
+                                mainViewModel.restartGame()
+                            }
+                            Button("Cancel", role: .cancel) {}
+                        } message: {
+                            Text("Are you sure?\nYou cannot undo once you restart the game.")
                         }
                     }
                 }

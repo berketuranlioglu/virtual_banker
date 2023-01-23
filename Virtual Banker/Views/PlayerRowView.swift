@@ -9,17 +9,60 @@ import SwiftUI
 
 struct PlayerRowView: View {
     
-    let player: PlayerModel
+    @EnvironmentObject var mainViewModel: MainViewModel
+    @State var player: PlayerModel
+    @State var isPlayerPressed: Bool = false
+    @State var updatingAmount: String = ""
     
     var body: some View {
-        HStack {
-            RoundedRectangle(cornerRadius: 5)
-                .frame(width: 5, height: 20)
-                .foregroundColor(Color(wordName: player.color))
-            Text(player.name)
-            Spacer()
-            Text("$\(player.money)")
-                .foregroundColor(.green)
+        VStack {
+            HStack {
+                RoundedRectangle(cornerRadius: 5)
+                    .frame(width: 5, height: 20)
+                    .foregroundColor(Color(wordName: player.color))
+                Text(player.name)
+                Spacer()
+                player.playing
+                ? Text("\(Int(player.money))")
+                    .foregroundColor(player.money > 0 ? .green : .red)
+                : Text("Bankrupt")
+                    .foregroundColor(.red)
+            }
+            .onTapGesture {
+                isPlayerPressed.toggle()
+            }
+            
+            if isPlayerPressed {
+                HStack {
+                    Text("Player has passed GO")
+                    Spacer()
+                    Text("Give $\(Int(mainViewModel.goAmount))")
+                        .foregroundColor(.accentColor)
+                        .onTapGesture {
+                            player.money += Float(mainViewModel.goAmount)
+                            mainViewModel.updatePlayer(player: player)
+                        }
+                        .disabled(!player.playing)
+                }
+                .padding(.vertical)
+                HStack {
+                    Text("Update the money")
+                    Spacer()
+                    Group {
+                        Text("$")
+                        TextField("Amount...", text: $updatingAmount) {
+                            player.money += Float(updatingAmount) ?? 0
+                            mainViewModel.updatePlayer(player: player)
+                        }
+                        .frame(width: 100)
+                        .disabled(!player.playing)
+                    }
+                }
+                .padding(.bottom)
+                Button("Declare the bankruptcy", role: .destructive) {
+                    player.playing = false
+                }
+            }
         }
     }
 }
@@ -31,6 +74,7 @@ struct PlayerRowView_Previews: PreviewProvider {
     static var previews: some View {
         PlayerRowView(player: dummy1)
             .previewLayout(.sizeThatFits)
+            .environmentObject(MainViewModel())
     }
 }
 
@@ -45,6 +89,7 @@ extension Color {
         case "blue":        self = .blue
         case "orange":      self = .orange
         case "yellow":      self = .yellow
+        case "brown":       self = .brown
         case "pink":        self = .pink
         case "purple":      self = .purple
         default:            return nil

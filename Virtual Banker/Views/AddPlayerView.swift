@@ -15,8 +15,9 @@ struct AddPlayerView: View {
     @State var nameText: String = ""
     @State var moneyText: String = ""
     @State var selectedColor: String = "Black"
+    @State var isAlert: Bool = false
     
-    let colors = ["Black", "Gray", "Red", "Orange",
+    let colors = ["Black", "Gray", "Red", "Orange", "Brown",
                   "Yellow", "Green", "Blue", "Purple", "Pink"
     ]
     
@@ -24,13 +25,22 @@ struct AddPlayerView: View {
         Form {
             Section(content: {
                 TextField("Name...", text: $nameText)
-                TextField("Starting USD...", text: $moneyText)
             }, header: {
-                Text("Name / Money")
+                Text("Name")
             })
             
             Section(content: {
-                Picker("Pick the color for player", selection: $selectedColor) {
+                TextField("Starting USD...", text: $moneyText)
+                    .onAppear {
+                        moneyText = "\(mainViewModel.startingMoney)"
+                    }
+            }, header: {
+                Text("Starting Money (Autofilled)")
+            })
+            
+            Section(content: {
+                Picker("Pick the color for \(nameText.isEmpty ? "..." : nameText)",
+                       selection: $selectedColor) {
                     ForEach(colors, id: \.self) {
                         Text($0)
                     }
@@ -47,12 +57,19 @@ struct AddPlayerView: View {
             }
             .listRowBackground(Color.accentColor)
         }
+        .alert("Please enter both the name and the money of new player",
+               isPresented: $isAlert, actions: {})
         .navigationTitle("👾 Add new player 👾")
     }
     
     func saveButtonPressed() {
-        mainViewModel.addPlayer(name: nameText, money: moneyText, color: selectedColor.lowercased())
-        self.dismiss()
+        if !nameText.isEmpty && !moneyText.isEmpty {
+            mainViewModel.addPlayer(name: nameText, money: moneyText,
+                                    color: selectedColor.lowercased())
+            self.dismiss()
+        } else {
+            isAlert.toggle()
+        }
     }
 }
 
