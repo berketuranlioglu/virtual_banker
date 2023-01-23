@@ -14,6 +14,8 @@
 		2CBEC593297DA9850030382B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBEC592297DA9850030382B /* MainView.swift */; };
 		2CBEC595297DB3AA0030382B /* PlayerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBEC594297DB3AA0030382B /* PlayerRowView.swift */; };
 		2CBEC597297DB4190030382B /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBEC596297DB4190030382B /* PlayerModel.swift */; };
+		2CBEC59D297DFC760030382B /* NoPlayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBEC59C297DFC760030382B /* NoPlayersView.swift */; };
+		2CBEC59F297DFDF10030382B /* AddPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBEC59E297DFDF10030382B /* AddPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,9 @@
 		2CBEC592297DA9850030382B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2CBEC594297DB3AA0030382B /* PlayerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRowView.swift; sourceTree = "<group>"; };
 		2CBEC596297DB4190030382B /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
+		2CBEC59C297DFC760030382B /* NoPlayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPlayersView.swift; sourceTree = "<group>"; };
+		2CBEC59E297DFDF10030382B /* AddPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerView.swift; sourceTree = "<group>"; };
+		2CBEC5A0297E105F0030382B /* Virtual-Banker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Virtual-Banker-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +62,7 @@
 		2C8AE332297DA34B00E5BD5E /* Virtual Banker */ = {
 			isa = PBXGroup;
 			children = (
+				2CBEC5A0297E105F0030382B /* Virtual-Banker-Info.plist */,
 				2C8AE341297DA57000E5BD5E /* Models */,
 				2CBEC58D297DA8F50030382B /* ViewModels */,
 				2CBEC58C297DA81B0030382B /* Views */,
@@ -86,7 +92,9 @@
 		2CBEC58C297DA81B0030382B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2CBEC59E297DFDF10030382B /* AddPlayerView.swift */,
 				2CBEC592297DA9850030382B /* MainView.swift */,
+				2CBEC59C297DFC760030382B /* NoPlayersView.swift */,
 				2CBEC594297DB3AA0030382B /* PlayerRowView.swift */,
 			);
 			path = Views;
@@ -171,9 +179,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CBEC597297DB4190030382B /* PlayerModel.swift in Sources */,
+				2CBEC59F297DFDF10030382B /* AddPlayerView.swift in Sources */,
 				2CBEC593297DA9850030382B /* MainView.swift in Sources */,
 				2C8AE334297DA34B00E5BD5E /* Virtual_BankerApp.swift in Sources */,
 				2CBEC58F297DA9450030382B /* MainViewModel.swift in Sources */,
+				2CBEC59D297DFC760030382B /* NoPlayersView.swift in Sources */,
 				2CBEC595297DB3AA0030382B /* PlayerRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,8 +315,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Virtual Banker/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Virtual-Banker-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -334,8 +344,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Virtual Banker/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Virtual-Banker-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -17,40 +17,14 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             if mainViewModel.players.isEmpty {
-                VStack {
-                    Text("No players here...")
-                        .font(.title)
-                        .foregroundColor(.secondary)
-                    Text("Let's add new players by clicking the button below")
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(EdgeInsets(top: 4, leading: 10, bottom: 20, trailing: 10))
-                    Button(action:{
-                        self.isAddPressed = true
-                    }) {
-                        Text("\(plusSymbol) Add new player")
-                            .foregroundColor(.accentColor)
-                            .frame(alignment: .center)
-                    }
-                }
-                .navigationTitle("Players List")
-                .navigationDestination(isPresented: $isAddPressed) {
-                    Text("Add player")
-                }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: Text("Settings")) {
-                            Text("Settings")
-                        }
-                    }
-                }
+                NoPlayersView()
             } else {
                 List {
                     ForEach(mainViewModel.players) { item in
                         PlayerRowView(player: item)
                     }
-                    .onDelete(perform: mainViewModel.deleteItem)
-//
+                    .onDelete(perform: mainViewModel.deletePlayer)
+                    
                     Button(action: {
                         isAddPressed = true
                     }) {
@@ -61,7 +35,7 @@ struct MainView: View {
                 }
                 .navigationTitle("Players List")
                 .navigationDestination(isPresented: $isAddPressed) {
-                    Text("Add player")
+                    AddPlayerView()
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -75,10 +49,6 @@ struct MainView: View {
                 }
             }
         }
-    }
-    
-    func goToAddPlayerView() {
-        
     }
 }
 
