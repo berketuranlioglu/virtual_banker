@@ -13,6 +13,7 @@ struct PlayerRowView: View {
     @State var player: PlayerModel
     @State var isPlayerPressed: Bool = false
     @State var updatingAmount: String = ""
+    @State var bankruptcyAlert: Bool = false
     
     var body: some View {
         VStack {
@@ -45,6 +46,7 @@ struct PlayerRowView: View {
                         .disabled(!player.playing)
                 }
                 .padding(.vertical)
+                
                 HStack {
                     Text("Update the money")
                     Spacer()
@@ -59,10 +61,22 @@ struct PlayerRowView: View {
                     }
                 }
                 .padding(.bottom)
-                Button("Declare the bankruptcy", role: .destructive) {
-                    player.playing = false
-                }
+                
+                Text("Declare the bankruptcy")
+                    .foregroundColor(.red)
+                    .onTapGesture {
+                        bankruptcyAlert.toggle()
+                    }
             }
+        }
+        .confirmationDialog("Change background",
+                            isPresented: $bankruptcyAlert) {
+            Button("Yes", role: .destructive) {
+                player.playing = false
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Are you sure?\nYou cannot undo once you declare the bankrupt.")
         }
     }
 }

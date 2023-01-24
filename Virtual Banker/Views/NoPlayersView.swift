@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoPlayersView: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var mainViewModel: MainViewModel
     private let plusSymbol = Image(systemName: "plus")
     @State private var isAddPressed = false
@@ -35,7 +36,7 @@ struct NoPlayersView: View {
                     }
                     .padding(.leading)
                     .background(Color.green.opacity(0.2))
-                    .foregroundColor(Color(red: 0/255, green: 51/255, blue: 51/255))
+                    .foregroundColor(colorScheme == .dark ? .white : Color(red: 0/255, green: 51/255, blue: 51/255))
                     .frame(width: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .offset(y:-2)
@@ -53,7 +54,7 @@ struct NoPlayersView: View {
                     }
                     .padding(.leading)
                     .background(Color.green.opacity(0.2))
-                    .foregroundColor(Color(red: 0/255, green: 51/255, blue: 51/255))
+                    .foregroundColor(colorScheme == .dark ? .white : Color(red: 0/255, green: 51/255, blue: 51/255))
                     .frame(width: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .offset(y:-2)
